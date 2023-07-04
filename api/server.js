@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const titanic = require('./routes/titanic/titanic.route');
+const cors = require('cors');
 require('dotenv').config();
 
 const hostname = process.env.IP;
@@ -15,21 +17,9 @@ mongoose
 const app = express();
 
 async function init(){
-    const passengerSchema = new mongoose.Schema({
-        PassengerId: Number,
-    });
-    const passengerModel = mongoose.model("passengers", passengerSchema);
-
-    app.get("/", async (req, res) => {
-        try {
-            // la méthode .find() du Modèle permet de récupérer les documents
-            const docs = await passengerModel.find({});
-            res.json(docs);
-        } catch (err) {
-            res.status(500).send(err.message);
-        }
-    });
-
+    app.use(cors());
+    app.use('/',titanic);
+    
     // Démarrage de l'app Express
     app.listen(port,hostname, () => {
         console.log(`Server running at http://${hostname}:${port}/`)
