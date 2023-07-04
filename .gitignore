@@ -1,0 +1,6 @@
+#dossiers
+/api/node_modules/
+/titanic/node_modules/
+
+#fichiers
+.env
